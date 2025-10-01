@@ -7,11 +7,7 @@ jobs:
   sanity:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Show tree
-        run: |
-          echo "Repo structure:"
-          ls -la
-          echo "OK ✅"
+      - uses: actions/checkout@v4
+      - run: node -v && npm -v
+      - name: List
+        run: ls -la && echo "OK ✅"

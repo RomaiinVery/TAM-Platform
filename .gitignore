@@ -1,29 +1,28 @@
-# Node
-node_modules/
-npm-debug.log*
-pnpm-debug.log*
-yarn.lock
+# macOS / IDE
+.DS_Store
+.idea/
+.vscode/
 
 # Env
 .env
 .env.*.local
+backend/.env
+frontend/.env
 
-# OS/Editors
-.DS_Store
-Thumbs.db
-.idea/
-.vscode/
+# Node
+node_modules/
 
-# Build outputs
+# Builds / caches
 dist/
 build/
 .next/
-
-# Foundry / Solidity
-cache/
 out/
-broadcast/
 
-# Prisma
-backend/prisma/dev.db
-backend/prisma/dev.db-journal
+# Foundry
+contracts/cache/
+contracts/out/
+contracts/broadcast/
+
+# Prisma (si tu utilises SQLite local)
+backend/prisma/*.db
+backend/prisma/*.db-journal
