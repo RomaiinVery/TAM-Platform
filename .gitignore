@@ -1,0 +1,29 @@
+# Node
+node_modules/
+npm-debug.log*
+pnpm-debug.log*
+yarn.lock
+
+# Env
+.env
+.env.*.local
+
+# OS/Editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Build outputs
+dist/
+build/
+.next/
+
+# Foundry / Solidity
+cache/
+out/
+broadcast/
+
+# Prisma
+backend/prisma/dev.db
+backend/prisma/dev.db-journal
