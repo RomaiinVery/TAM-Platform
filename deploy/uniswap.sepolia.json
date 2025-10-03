@@ -1,0 +1,9 @@
+{
+    "WETH": "0xfff9976782d46cc05630d1f6ebab18b2324d6b14",
+    "UniswapV3Factory": "0x0227628f3F023bb0B980b67D528571c95c6DaC1c",
+    "NonfungiblePositionManager": "0x1238536071E1c677A632429e3655c799b22cDA52",
+    "UniversalRouter": "0x3A9D48AB9751398BbFa63ad67599Bb04e4BdF98b",
+    "QuoterV2": "0xEd1f6473345F45b75F8179591dd5bA1888cf2FB3",
+    "pool": "0x5A9C1dA3068DD5c69E298BeA01e32dF62d863a09",
+    "lp_positions": ["211136", "211137"]
+}
