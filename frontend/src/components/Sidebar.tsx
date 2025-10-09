@@ -12,7 +12,7 @@ export default function Sidebar() {
 
   return (
     <div className="h-screen w-60 bg-[#1a1a1a] text-gray-300 flex flex-col p-4">
-      <h1 className="text-2xl font-bold text-white mb-8">🏢 Real Estate</h1>
+      <h1 className="text-2xl font-bold text-white mb-8">TAM Platform</h1>
       <nav className="flex flex-col gap-3">
         {links.map(({ href, label }) => (
           <Link

@@ -11,33 +11,42 @@ export default function ConnectWallet() {
       return;
     }
 
+    setError(null);
     try {
       const accounts = await window.ethereum.request({
         method: "eth_requestAccounts",
       });
       setAccount(accounts[0]);
-      setError(null);
     } catch (err: any) {
-      // Gestion des erreurs utilisateur ou système
-      if (err.code === 4001) {
-        // 4001 = "User rejected request"
-        setError("Connection request rejected.");
-      } else {
-        setError("Failed to connect to wallet.");
-        console.error("Metamask connection error:", err);
-      }
+      if (err.code === 4001) setError("Connection request rejected.");
+      else setError("Failed to connect to wallet.");
+      console.error("Metamask connection error:", err);
     }
   }
 
   return (
-    <div className="flex items-center gap-3">
-      {error && <p className="text-sm text-red-500">{error}</p>}
+    <div className="flex flex-col items-end gap-2">
       <button
         onClick={connect}
-        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition"
+        className={`
+          relative px-5 py-2 rounded-md font-medium
+          text-white
+          bg-gradient-to-r from-blue-600 to-blue-800
+          hover:from-blue-500 hover:to-blue-700
+          transition-all duration-300
+          shadow-[0_0_10px_#2563eb50]
+          hover:shadow-[0_0_20px_#2563ebaa]
+          focus:outline-none
+          after:content-[''] after:absolute after:inset-0 after:rounded-md
+          after:transition-all after:duration-300 after:bg-blue-500/10 hover:after:bg-blue-500/20
+        `}
       >
-        {account ? account.slice(0, 6) + "..." + account.slice(-4) : "Connect Wallet"}
+        {account
+          ? `${account.slice(0, 6)}...${account.slice(-4)}`
+          : "Connect Wallet"}
       </button>
+
+      {error && <p className="text-xs text-red-500">{error}</p>}
     </div>
   );
 }

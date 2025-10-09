@@ -1,6 +1,7 @@
 import './globals.css';
 import Sidebar from "@/components/Sidebar";
 import ConnectWallet from '@/components/ConnectWallet';
+import PageTransition from '@/components/PageTransition';
 
 export const metadata = {
   title: 'TAM Platform',
@@ -10,15 +11,17 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="flex bg-[#0e0e0e] text-gray-200 min-h-screen">
-        <Sidebar />
+      <body className="bg-[#0d0d0d] text-gray-100">
+        <div className="flex h-screen">
+          <Sidebar />
+          <main className="flex-1 p-8 overflow-y-auto">
+            <div className="flex justify-end mb-6">
+              <ConnectWallet />
+            </div>
 
-        <div className="flex-1 flex flex-col">
-          <header className="flex items-center justify-end p-4 border-b border-[#1f1f1f] bg-[#141414]">
-            <ConnectWallet />
-          </header>
-
-          <main className="flex-1 p-8">{children}</main>
+            {/* 🚀 Ici la transition entre pages */}
+            <PageTransition>{children}</PageTransition>
+          </main>
         </div>
       </body>
     </html>
