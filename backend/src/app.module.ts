@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { HealthController } from './health.controller';
+import { KycModule } from './kyc/kyc.module'
+import { DexModule } from './dex/dex.module'
 
 
 @Module({
@@ -12,8 +14,10 @@ import { HealthController } from './health.controller';
     ConfigModule.forRoot({
       isGlobal: true,
       cache: true,
-      envFilePath: ['.env', '.env.local']
-    })
+      envFilePath: ['.env']
+    }),
+    KycModule,
+    DexModule,
   ],
   controllers: [AppController, HealthController],
   providers: [AppService],
