@@ -4,6 +4,8 @@ import type { Address } from 'viem'
 import { parseAbi } from 'viem'
 import { publicClient, maybeAdminWallet, ADDR } from '../viem'
 import { AdminGuard } from '../auth/admin.guard'
+import { IsInt, Min, Max, IsString, Matches } from 'class-validator';
+import { Type } from 'class-transformer';
 
 // Séparation des ABI pour éviter l’union ambiguë lecture/écriture
 const KYC_GET_ABI = parseAbi([
@@ -14,9 +16,16 @@ const KYC_SET_ABI = parseAbi([
   'function setStatus(address user, uint8 status)',
 ])
 
-class SetKycStatusDto {
-  address!: Address
-  status!: number // 0..255 (0=None, 1=Whitelisted, 2=Blacklisted)
+class SetKycDto {
+  @IsString()
+  @Matches(/^0x[a-fA-F0-9]{40}$/, { message: 'address must be a valid EVM address' })
+  address!: string;
+
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  @Max(255) // ton contrat prend un uint8
+  status!: number;
 }
 
 @Controller('kyc')
@@ -33,24 +42,18 @@ export class KycController {
     return { address: addr, status: Number(raw) } // JSON sûr
   }
 
-  @UseGuards(AdminGuard)
   @Post('set')
-  async set(@Body() dto: SetKycStatusDto) {
-    if (!maybeAdminWallet) {
-      return { ok: false, reason: 'Server has no PRIVATE_KEY configured' }
-    }
+  @UseGuards(AdminGuard)
+  async set(@Body() dto: SetKycDto) {
     if (!Number.isInteger(dto.status) || dto.status < 0 || dto.status > 255) {
-      throw new BadRequestException('status must be an integer between 0 and 255')
+      throw new BadRequestException('status must be an integer between 0 and 255');
     }
-
-    // viem (dans ta config) attend un number pour uint8 → on envoie number, sans any
-    const txHash = await maybeAdminWallet.writeContract({
+    const txHash = await maybeAdminWallet?.writeContract({
       address: ADDR.KYC,
       abi: KYC_SET_ABI,
       functionName: 'setStatus',
-      args: [dto.address, dto.status],
-    })
-
-    return { ok: true, txHash }
+      args: [dto.address as Address, dto.status],
+    });
+    return { ok: true, txHash };
   }
 }

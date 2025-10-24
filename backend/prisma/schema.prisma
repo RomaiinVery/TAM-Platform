@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int    @id @default(autoincrement())
+  firstname String
+  lastname  String
+  adresse   String @unique
+  kyc       Int    @default(0)
+}
+
+enum AssetKind {
+  erc20
+  erc721
+}
+
+enum AssetStatus {
+  draft
+  minted
+  listed
+  redeemed
+  blocked
+}
+
+model Asset {
+  id            Int         @id @default(autoincrement())
+  ownerAdresse  String
+  kind          AssetKind
+  title         String
+  description   String
+  amountWei     String?     // pour erc20
+  metadataUrl   String?     // pour erc721
+  tokenAddress  String?     // token RWA utilisé
+  txHash        String?     // hash de tx mint
+  chainId       Int?
+  kycAtMint     Int?        // 0/1/2
+  status        AssetStatus @default(draft)
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([ownerAdresse])
+  @@index([tokenAddress])
+  @@index([status])
+}

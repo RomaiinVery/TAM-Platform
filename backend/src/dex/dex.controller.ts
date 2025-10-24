@@ -183,7 +183,7 @@ export class DexController {
       warnings.push('Pool sans liquidité — quote indicative')
     }
     // conversion float → BigInt = approximation : on le signale
-    warnings.push('Quote spot approximative (arrondi float→bigint)')
+    // warnings.push('Quote spot approximative')
 
     // 8) Réponse OK
     return {
@@ -315,10 +315,7 @@ export class DexController {
       amountIn: amountIn.toString(),
       amountOutMin: amountOutMin.toString(),
       path,
-      notes: [
-        'Assure-toi que le wallet a approve(tokenIn -> UniversalRouter).',
-        'Calcule basé sur mid-price spot; pour une quote “réaliste”, brancher QuoterV2.',
-      ],
+      notes: [],
     }
   }
 }

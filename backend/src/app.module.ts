@@ -1,4 +1,3 @@
-// backend/src/app.module.ts
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
@@ -7,7 +6,10 @@ import { AppService } from './app.service';
 import { HealthController } from './health.controller';
 import { KycModule } from './kyc/kyc.module'
 import { DexModule } from './dex/dex.module'
-
+import { TokenModule } from './token/token.module'
+import { UsersModule } from './users/users.module';
+import { PrismaModule } from './prisma/prisma.module';
+import { AssetsModule } from './assets/assets.module';
 
 @Module({
   imports: [
@@ -16,8 +18,12 @@ import { DexModule } from './dex/dex.module'
       cache: true,
       envFilePath: ['.env']
     }),
+    PrismaModule,
+    UsersModule,
+    AssetsModule,
     KycModule,
     DexModule,
+    TokenModule
   ],
   controllers: [AppController, HealthController],
   providers: [AppService],
